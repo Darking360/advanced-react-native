@@ -3,7 +3,9 @@ import React, {
 } from 'react'
 
 import {
-    Image
+    Image,
+    PanResponder,
+    Animated,
 } from 'react-native';
 
 import styles from './Styles/DeckCardStyle'
@@ -24,6 +26,22 @@ import {
 
 export default class DeckCard extends Component {
 
+  constructor(props) {
+    super(props);
+
+    const position = new Animated.ValueXY();
+    const panResponder = PanResponder.create({
+      onStartShouldSetPanResponder: () => true,
+      onPanResponderMove: (event, gesture) => {
+        position.setValue({ x: gesture.dx, y: gesture.dy });
+      },
+      onPanResponderRelease: () => {}
+    });
+
+    this.state = { panResponder, position };
+
+  }
+
     render() {
         const {
             title,
@@ -31,7 +49,8 @@ export default class DeckCard extends Component {
             image
         } = this.props;
         return (
-            <Card key={key} >
+          <Animated.View style={this.state.position.getLayout()}>
+            <Card key={key} {...this.state.panResponder.panHandlers}>
               <CardItem>
               <Left>
                 <Body>
@@ -50,6 +69,7 @@ export default class DeckCard extends Component {
                 </Body>
               </CardItem>
              </Card>
+          </Animated.View>
         )
     }
 }
