@@ -10,11 +10,11 @@ import styles from './Styles/DeckStyle'
 
 export default class Deck extends Component {
 
-  renderItem = ({item: { item }}) => {
+  renderItem = ({ key, item }) => {
     const {
       renderCard,
-    } = this.props
-    return renderCard(item);
+    } = this.props;
+    return renderCard({ key, item });
   }
 
   render () {
@@ -23,10 +23,21 @@ export default class Deck extends Component {
     } = this.props;
     return (
       <View style={styles.deckContainer}>
-        <FlatList
+      {
+        /*
+         *
+         *<FlatList
           data={data.map((item) => { return { key: item.id, item } })}
           renderItem={this.renderItem}
+          style={{ flex: 1, backgroundColor: 'green', position: 'relative' }}
         />
+         *
+         * */
+      }
+      { data.map((item) => {
+          return this.renderItem(item);
+        }) 
+      } 
       </View>
     )
   }

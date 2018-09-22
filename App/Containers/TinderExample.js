@@ -71,7 +71,7 @@ class TinderExample extends Component {
       {
         data.length > 0 ?
            <Deck 
-            data={data.map((deckItem, index) => {return { key: index, item: deckItem }})}
+            data={data.map((deckItem, index) => {return { key: index, item: deckItem }}).reverse()}
             renderCard={this.renderCard} 
           />
         :

@@ -88,20 +88,25 @@ export default class DeckCard extends Component {
 
   renderCard = (component) => {
     const {
-      isFirst
+      isFirst,
+      key
     } = this.props;
 
     if ( isFirst ) {
       return(
-        <Animated.View style={this.getCardStyle()}>
-          { component  }      
+        <Animated.View 
+          style={[styles.cardStyle, this.getCardStyle(), { elevation: 9 }]}
+          {...this.state.panResponder.panHandlers}
+          key={key}
+        >
+          { component }      
         </Animated.View>
       );
     } else {
       return(
-        <View>
+        <Animated.View style={styles.cardStyle} key={key}>
           { component }  
-        </View>
+        </Animated.View>
       );
     }
   }
@@ -129,7 +134,7 @@ export default class DeckCard extends Component {
             key,
         } = this.props;
         return (this.renderCard(
-            <Card key={key} {...this.state.panResponder.panHandlers}>
+            <Card key={key} >
               <CardItem>
               <Left>
                 <Body>
