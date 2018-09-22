@@ -33,7 +33,7 @@ class TinderExample extends Component {
     const { activeCard } = this.state;
     return(
       <DeckCard 
-        key={key} 
+        index={key} 
         isFirst={key === activeCard}
         item={item}
         onSwipeRight={this.onSwipeRight}

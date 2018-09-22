@@ -1,5 +1,5 @@
 import React, {
-    Component
+    PureComponent as Component
 } from 'react'
 
 import {
@@ -8,6 +8,8 @@ import {
     Animated,
     View,
     Dimensions,
+    LayoutAnimation,
+    UIManager
 } from 'react-native';
 
 import styles from './Styles/DeckCardStyle'
@@ -36,6 +38,11 @@ export default class DeckCard extends Component {
     onSwipeRight: () => {},
     onSwipeLeft: () => {},
     buttonAction: () => {}
+  };
+
+  componentWillUpdate = () => {
+    UIManager.setLayoutAnimationEnabledExperimental && UIManager.setLayoutAnimationEnabledExperimental(true);
+    LayoutAnimation.spring();
   }
 
   constructor(props) {
@@ -89,22 +96,20 @@ export default class DeckCard extends Component {
   renderCard = (component) => {
     const {
       isFirst,
-      key
+      index
     } = this.props;
-
     if ( isFirst ) {
       return(
         <Animated.View 
           style={[styles.cardStyle, this.getCardStyle(), { elevation: 9 }]}
           {...this.state.panResponder.panHandlers}
-          key={key}
         >
           { component }      
         </Animated.View>
       );
     } else {
       return(
-        <Animated.View style={styles.cardStyle} key={key}>
+        <Animated.View style={[styles.cardStyle, { top: 12 * parseInt(index)}]}>
           { component }  
         </Animated.View>
       );
@@ -131,10 +136,10 @@ export default class DeckCard extends Component {
             },
             buttonText,
             buttonAction,
-            key,
+            index,
         } = this.props;
         return (this.renderCard(
-            <Card key={key} >
+            <Card index={index}>
               <CardItem>
               <Left>
                 <Body>
