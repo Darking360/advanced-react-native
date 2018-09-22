@@ -24,17 +24,59 @@ const DATA = [
 
 class TinderExample extends Component {
 
-  renderCard = (item) => {
-    return(<DeckCard key={item.id} text={item.title} image={item.uri} />);
+  state = {
+    activeCard: 0,
+    data: DATA,
+  };
+
+  renderCard = ({ key, item }) => {
+    const { activeCard } = this.state;
+    return(
+      <DeckCard 
+        key={key} 
+        isFirst={key === activeCard}
+        item={item}
+        onSwipeRight={this.onSwipeRight}
+        onSwipeLeft={this.onSwipeLeft}
+        buttonText={'View more'}
+      />
+    );
+  }
+
+  onSwipeRight = (card) => {
+    this.setState({ data: this.state.data.filter((item) => item.id != card.id) });
+  }
+
+  onSwipeLeft = (card) => {
+    this.setState({ data: this.state.data.filter((item) => item.id != card.id) });
+  }
+
+  renderEmpty = () => {
+    return(
+      <DeckCard
+        item={
+          { title: 'No more items, fetch some more!', uri: null }
+        }
+        key={'Empty'}
+        buttonText={'Get more!'}
+        buttonAction={() => this.setState({ data: DATA })}
+      />
+    );
   }
 
   render () {
+    const { data } = this.state;
     return (
       <View style={styles.mainContainer}>
-        <Deck 
-          data={DATA}
-          renderCard={this.renderCard} 
-        />
+      {
+        data.length > 0 ?
+           <Deck 
+            data={data.map((deckItem, index) => {return { key: index, item: deckItem }})}
+            renderCard={this.renderCard} 
+          />
+        :
+          this.renderEmpty()
+      } 
       </View>
     )
   }

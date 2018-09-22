@@ -6,6 +6,8 @@ import {
     Image,
     PanResponder,
     Animated,
+    View,
+    Dimensions,
 } from 'react-native';
 
 import styles from './Styles/DeckCardStyle'
@@ -24,7 +26,17 @@ import {
     Right
 } from 'native-base';
 
+const width = Dimensions.get('window').width;
+const swipeThreshold = 0.25 * width;
+const swipeDuration = 250;
+
 export default class DeckCard extends Component {
+
+  static defaultProps = {
+    onSwipeRight: () => {},
+    onSwipeLeft: () => {},
+    buttonAction: () => {}
+  }
 
   constructor(props) {
     super(props);
@@ -35,21 +47,88 @@ export default class DeckCard extends Component {
       onPanResponderMove: (event, gesture) => {
         position.setValue({ x: gesture.dx, y: gesture.dy });
       },
-      onPanResponderRelease: () => {}
+      onPanResponderRelease: (event, gesture) => {
+        if (gesture.dx > swipeThreshold) {
+          this.forceSwipe('right');
+        } else if (gesture.dx < -swipeThreshold) {
+          this.forceSwipe('left');
+        } else {
+           this.resetPosition();        
+        }
+      }
     });
 
     this.state = { panResponder, position };
 
   }
 
+  forceSwipe = (direction) => {
+    const { position } = this.state;
+    const x = direction === 'right' ? width : -width;
+    Animated.timing(position, {
+      toValue: { x, y: 0 },
+      duration: swipeDuration,
+    }).start(() => {
+      this.onSwipeComplete(direction);
+    });
+  }
+
+  onSwipeComplete = (direction) => {
+    const { onSwipeRight, onSwipeLeft, item } = this.props;
+    direction === 'right' ? onSwipeRight(item) : onSwipeLeft(item);
+    this.state.position.setValue({ x: 0, y: 0 });
+  }
+
+  resetPosition = () => {
+    const { position } = this.state;
+    Animated.spring(position, {
+      toValue: { x: 0, y: 0 }
+    }).start();
+  };
+
+  renderCard = (component) => {
+    const {
+      isFirst
+    } = this.props;
+
+    if ( isFirst ) {
+      return(
+        <Animated.View style={this.getCardStyle()}>
+          { component  }      
+        </Animated.View>
+      );
+    } else {
+      return(
+        <View>
+          { component }  
+        </View>
+      );
+    }
+  }
+
+  getCardStyle = () => {
+    const { position } = this.state;
+    const rotate = position.x.interpolate({
+      inputRange: [-width * 1.5, 0 , width * 1.5],
+      outputRange: ['-120deg', '0deg', '120deg']
+    });
+    return {
+      ...position.getLayout(),
+      transform: [{ rotate }]
+    }
+  }
+
     render() {
         const {
-            title,
+            item: {
+              text: title,
+              uri: image
+            },
+            buttonText,
+            buttonAction,
             key,
-            image
         } = this.props;
-        return (
-          <Animated.View style={this.state.position.getLayout()}>
+        return (this.renderCard(
             <Card key={key} {...this.state.panResponder.panHandlers}>
               <CardItem>
               <Left>
@@ -63,13 +142,12 @@ export default class DeckCard extends Component {
             </CardItem>
             <CardItem>
               <Body>
-                  <Button primary full>
-                    <Text>Choose</Text>
+                  <Button primary full onPress={buttonAction}>
+                    <Text>{buttonText}</Text>
                   </Button>
                 </Body>
               </CardItem>
              </Card>
-          </Animated.View>
-        )
+          ))
     }
 }
