@@ -31,16 +31,12 @@ class OtpForm extends Component {
     const {
       signupPhone: phone,
     } = this.state;
-    console.log('Enviando ----->', phone)
     try {
       await axios.post('https://us-central1-one-time-password-rna-551c7.cloudfunctions.net/createUser', {
         phone
       });
       Alert.alert('Excelente', 'Te has registrado correctamente, enseguida enviaremos un codigo a tu celular.');
     } catch(e) {
-      console.log('Error ---->');
-      console.log(e);
-      console.log(e.response)
       Alert.alert('Algo ha ido mal', e.response.data.error);
     }
   }
