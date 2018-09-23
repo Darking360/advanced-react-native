@@ -1,4 +1,5 @@
 import { StackNavigator } from 'react-navigation'
+import OtpForm from '../Containers/OtpForm'
 import Menu from '../Containers/Menu'
 import TinderExample from '../Containers/TinderExample'
 import BallExample from '../Containers/BallExample'
@@ -8,6 +9,7 @@ import styles from './Styles/NavigationStyles'
 
 // Manifest of possible screens
 const PrimaryNav = StackNavigator({
+  OtpForm: { screen: OtpForm },
   Menu: { screen: Menu, title: 'Menu' },
   TinderExample: { screen: TinderExample },
   BallExample: { screen: BallExample },

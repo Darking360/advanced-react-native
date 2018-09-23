@@ -38,6 +38,13 @@ class Menu extends Component {
             </Text>
           </Button>      
         </View>
+        <View style={styles.linkContainer}>
+          <Button onPress={() => this.navigateTo('OtpForm')}>
+            <Text style={styles.menuText}>  
+              One Time Password
+            </Text>
+          </Button>      
+        </View>
       </View>
     )
   }
