@@ -19,7 +19,7 @@ class LoginScreen extends Component {
   }
 
   render () {
-    const { loginUser, navigation: { navigate } } = this.props;
+    const { loginUser, logoutUser, navigation: { navigate } } = this.props;
     return (
       <View style={styles.container}>
         <LoginButton
@@ -37,7 +37,10 @@ class LoginScreen extends Component {
                     Alert.alert('Bienvenido a Job Finder!');
                     navigate('DeckScreen');
                   }
-                )
+                ).catch((e) => {
+                  console.log('Error ---->')
+                  console.log(e)
+                })
               }
             }
           }

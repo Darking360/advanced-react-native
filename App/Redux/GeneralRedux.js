@@ -47,9 +47,8 @@ export const failure = state =>
   state.merge({ fetching: false, error: true, payload: null })
 
 // Logout user
-export const logoutUser = state => {
+export const logoutUser = state => 
   state.merge({ userToken: null })
-}
 
 // Login user
 export const loginUser = (state, action) => {
