@@ -48,14 +48,11 @@ export const failure = state =>
 
 // Logout user
 export const logoutUser = state => {
-  console.log('Sale ---->', state)
   state.merge({ userToken: null })
 }
 
 // Login user
 export const loginUser = (state, action) => {
-  console.log('Inicio sesion ----->')
-  console.log(state, action)
   const { userToken } = action
   return state.merge({ userToken })
 }

@@ -31,14 +31,20 @@ const PrimaryNav = StackNavigator({
           SettingsScreen: { screen: SettingsScreen },
         })
     })
+  }, {
+    navigationOptions: {
+      tabBarVisible: false,
+    },
+    lazyLoad: true
   })
 }, {
   // Default config for all screens
   headerMode: 'none',
   initialRouteName: 'Menu',
   navigationOptions: {
-    headerStyle: styles.header
-  }
+    headerStyle: styles.header,
+  },
+  lazyLoad: true
 })
 
 export default PrimaryNav
