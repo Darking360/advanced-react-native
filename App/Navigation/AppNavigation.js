@@ -21,8 +21,8 @@ const PrimaryNav = StackNavigator({
   BallExample: { screen: BallExample },
   LaunchScreen: { screen: LaunchScreen },
   JobFinderApp: TabNavigator({  
-    LoginScreen: { screen: LoginScreen },
     WelcomeScreen: { screen: WelcomeScreen },
+    LoginScreen: { screen: LoginScreen },
     MainScreen: TabNavigator({
        DeckScreen: { screen: DeckScreen },
        MapScreen: { screen: MapScreen },
