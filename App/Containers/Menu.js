@@ -45,6 +45,13 @@ class Menu extends Component {
             </Text>
           </Button>      
         </View>
+        <View style={styles.linkContainer}>
+          <Button onPress={() => this.navigateTo('JobFinderApp')}>
+            <Text style={styles.menuText}>  
+              Job Finder App
+            </Text>
+          </Button>      
+        </View>
       </View>
     )
   }

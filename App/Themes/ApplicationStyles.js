@@ -7,6 +7,19 @@ import Colors from './Colors'
 
 const ApplicationStyles = {
   screen: {
+    headerNavigationStyle: {
+      flex: 1,
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+    },
+    navigationButton: {
+      backgroundColor: 'transparent',
+    },
+    navigationButtonText: {
+      color: 'rgba(0, 122, 255, 1)',
+      paddingHorizontal: 10,
+    },
     mainContainer: {
       flex: 1,
       backgroundColor: 'white',
