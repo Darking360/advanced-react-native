@@ -1,23 +1,31 @@
 import React, { Component } from 'react'
-import { ScrollView, Text } from 'react-native'
+import { View, Text, StyleSheet } from 'react-native'
 import { connect } from 'react-redux'
-// Add Actions - replace 'Your' with whatever your reducer is called :)
-// import YourActions from '../Redux/YourRedux'
 
-// Styles
 import styles from './Styles/DeckScreenStyle'
+import MapView from 'react-native-maps';
 
 class DeckScreen extends Component {
-  // constructor (props) {
-  //   super(props)
-  //   this.state = {}
-  // }
+
+  state = {
+    region: {
+      longitude: -122,
+      latitude: 37,
+      longitudeDelta: 0.04,
+      latitudeDelta: 0.09
+    }
+  }
+
+  changeRegion = (region) => {
+    this.setState({ region });
+  }
 
   render () {
+    const { region } = this.state;
     return (
-      <ScrollView style={styles.container}>
-        <Text>DeckScreen Container</Text>
-      </ScrollView>
+      <View style={styles.container}>
+        <MapView style={StyleSheet.absoluteFillObject} initialRegion={region} region={region} onRegionChange={this.changeRegion}/>
+      </View>
     )
   }
 }

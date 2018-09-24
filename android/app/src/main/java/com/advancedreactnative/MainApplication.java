@@ -12,6 +12,7 @@ import com.facebook.soloader.SoLoader;
 import com.facebook.FacebookSdk;
 import com.facebook.CallbackManager;
 import com.facebook.appevents.AppEventsLogger;
+import com.airbnb.android.react.maps.MapsPackage;
 
 import java.util.Arrays;
 import java.util.List;
@@ -35,7 +36,8 @@ public class MainApplication extends Application implements ReactApplication {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
           new FBSDKPackage(mCallbackManager),
-          new ReactNativeConfigPackage()
+          new ReactNativeConfigPackage(),
+          new MapsPackage()
       );
     }
 

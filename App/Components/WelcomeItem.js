@@ -7,7 +7,7 @@ export default class WelcomeItem extends PureComponent {
 
   goToLogin = () => {
     const { navigate } = this.props;
-    navigate('LoginScreen');
+    navigate('DeckScreen');
   }
 
   render () {
